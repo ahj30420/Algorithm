@@ -15,7 +15,7 @@ public class Stack {
         for(int i = 0; i < count; i++){
             executeStack(stack,reader.readLine());
         }
-
+        reader.close();
     }
 
     private static void executeStack(java.util.Stack stack, String line) {

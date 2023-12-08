@@ -39,6 +39,6 @@ public class Stack_Sequence {
         else{
             System.out.println("NO");
         }
-
+        reader.close();
     }
 }

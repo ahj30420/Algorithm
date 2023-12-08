@@ -20,6 +20,7 @@ public class Queue {
             executeQueue(queue,reader.readLine());
         }
 
+        reader.close();
     }
 
     private static void executeQueue(java.util.Queue queue, String line) {

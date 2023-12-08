@@ -20,6 +20,7 @@ public class Parenthesis_String {
                 System.out.println("NO");
             }
         }
+        reader.close();
     }
 
     private static boolean isVPS(String line) {

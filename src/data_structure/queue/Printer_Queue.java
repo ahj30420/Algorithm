@@ -46,6 +46,8 @@ public class Printer_Queue {
                 }
 
             }
+
+            reader.close();
             System.out.println(count);
         }
 
