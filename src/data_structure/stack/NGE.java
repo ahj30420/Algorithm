@@ -1,49 +1,36 @@
 package data_structure.stack;
 
-import java.io.*;
 import java.util.*;
+import java.util.Stack;
 
 //오큰수
 public class NGE {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        StringBuilder sb = new StringBuilder();
+        int N = scanner.nextInt();
+        int[] arr = new int[N];
+        Stack<Integer> stack = new Stack<>();
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        int size = Integer.parseInt(reader.readLine());
-        StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
-        int[] arr = new int[size];
-
-        for(int i = 0; i < size; i++){
-            arr[i] = Integer.parseInt(tokenizer.nextToken());
+        for (int i = 0; i < N; i++) {
+            arr[i] = scanner.nextInt();
         }
 
-        int[] result = findNGE(arr);
-
-        for (int rs : result) {
-            System.out.print(rs + " ");
-        }
-
-        reader.close();
-
-    }
-
-    private static int[] findNGE(int[] arr) {
-        int[] result = new int[arr.length];
-        java.util.Stack<Integer> stack = new java.util.Stack<>();
-
-        for (int i = arr.length - 1; i >= 0; i--) {
-            while (!stack.isEmpty() && stack.peek() <= arr[i]) {
-                stack.pop();
+        for (int i = 0; i < N; i++){
+            while(!stack.isEmpty() && arr[stack.peek()] < arr[i]){
+                arr[stack.pop()] = arr[i];
             }
-
-            if (stack.isEmpty()) {
-                result[i] = -1;
-            } else {
-                result[i] = stack.peek();
-            }
-
-            stack.push(arr[i]);
+            stack.push(i);
         }
-        return result;
+
+        while (!stack.isEmpty()) {
+            arr[stack.pop()] = -1;
+        }
+
+        for (int num : arr) {
+            sb.append(num).append(" ");
+        }
+
+        System.out.println(sb);
     }
 }
