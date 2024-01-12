@@ -8,15 +8,16 @@ public class StringRealignment {
     public static void main(String[] args){
 
         Scanner scan = new Scanner(System.in);
-        String input = scan.next();
+
+        String n = scan.next();
         ArrayList<Character> result = new ArrayList<>();
 
-        int val = 0;
-        for(int i = 0; i < input.length(); i++){
-            if(Character.isLetter(input.charAt(i))){
-                result.add(input.charAt(i));
+        int sum = 0;
+        for(int i = 0; i < n.length(); i++){
+            if(Character.isLetter(n.charAt(i))){
+                result.add(n.charAt(i));
             } else{
-                val += input.charAt(i) - '0';
+                sum += n.charAt(i) - '0';
             }
         }
 
@@ -26,8 +27,9 @@ public class StringRealignment {
             System.out.println(result.get(i));
         }
 
-        if(val != 0){
-            System.out.println(val);
+        if(sum != 0){
+            System.out.println(sum);
         }
+
     }
 }

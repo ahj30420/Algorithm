@@ -10,6 +10,7 @@ public class UpDownLeftRight {
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
+
         sc.nextLine();
         String[] plans = sc.nextLine().split(" ");
         int x = 1, y = 1;

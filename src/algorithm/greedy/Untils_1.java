@@ -10,13 +10,12 @@ public class Untils_1 {
 
         int n = scan.nextInt();
         int k = scan.nextInt();
-        int count = 0;
 
-        while( n != 1){
+        int count = 0;
+        while(n != 1){
             if(n % k == 0){
-                n /= k;
-            }
-            else{
+                n = n/k;
+            } else{
                 n -= 1;
             }
             count++;

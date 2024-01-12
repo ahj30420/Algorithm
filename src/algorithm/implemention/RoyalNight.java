@@ -7,24 +7,26 @@ import java.io.*;
 public class RoyalNight {
     public static void main(String[] args){
 
-        Scanner scan = new Scanner(System.in);
+       Scanner scan = new Scanner(System.in);
 
-        String input = scan.next();
-        int col = input.charAt(0) - 'a' + 1;
-        int row = input.charAt(1) - '0';
+       String n = scan.next();
 
-        int[] dx = {1, 2, 2, 1, -1, -2, -2, -1};
-        int[] dy = {2, 1, -1, -2, -2, -1, 1, 2};
+       int x = n.charAt(0) - 'a' + 1;
+       int y = n.charAt(1) - '0';
 
-        int count = 0;
-        for(int i = 0; i < 8; i++){
-            int nextRow = row + dx[i];
-            int nextCol = col + dy[i];
+       int[] dx = {1,2,2,1,-1,-2,-2,-1};
+       int[] dy = {2,1,-1,-2,-2,-1,1,2};
 
-            if(nextRow >= 1 && nextRow <= 8 && nextCol >=1 && nextCol <= 8){
-                count += 1;
-            }
-        }
+       int count = 0;
+       for(int i = 0; i < 8; i++){
+           int cx = x + dx[i];
+           int cy = y + dy[i];
+
+           if(cx >= 1 && cx <= 8 && cy >= 1 && cy <= 8){
+               count++;
+           }
+       }
+
         System.out.println(count);
     }
 }

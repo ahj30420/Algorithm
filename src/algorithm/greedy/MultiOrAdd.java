@@ -9,14 +9,13 @@ public class MultiOrAdd {
         Scanner scan = new Scanner(System.in);
 
         String n = scan.next();
-        long result = n.charAt(0) - '0';
-
+        int result = n.charAt(0) - '0';
         for(int i = 1; i < n.length(); i++){
-            int elem = n.charAt(i) - '0';
-            if(elem <= 1 || result <= 1){
-                result += elem;
+            int target = n.charAt(i) - '0';
+            if(result <= 1 || target <=1){
+                result += target;
             } else{
-                result *= elem;
+                result *= target;
             }
         }
 
