@@ -19,17 +19,18 @@ public class DFS {
 
         boolean[] visited = new boolean[9];
 
-        dfs(1, graph, visited);
-
+        dfs(n,graph,visited);
     }
 
-    private static void dfs(int x, int[][] graph, boolean[] visited) {
+    private static void dfs(int x, int[][] graph, boolean[] visited){
         visited[x] = true;
+
         System.out.println(x + " ");
 
         for(int i = 0; i < graph[x].length; i++){
-            int y = graph[x][i];
-            if(!visited[y]) dfs(y, graph, visited);
+            int k = graph[x][i];
+            if(!visited[k]) { dfs(k, graph, visited); }
         }
+
     }
 }

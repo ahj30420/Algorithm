@@ -7,50 +7,47 @@ import java.io.*;
 public class FreezeDrink {
 
     public static int n,m;
-    public static int[][] graph = new int[1000][1000];
+    public static int[][] map = new int[1000][1000];
 
     public static void main(String[] args) throws IOException{
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
+
         n = Integer.parseInt(tokenizer.nextToken());
         m = Integer.parseInt(tokenizer.nextToken());
 
         for(int i = 0; i < n; i++){
-            tokenizer = new StringTokenizer(reader.readLine());
-            String target = tokenizer.nextToken();
+            String target = reader.readLine();
             for(int j = 0; j < m; j++){
-                int x = target.charAt(j) - '0';
-                graph[i][j] = x;
+                map[i][j] = target.charAt(j) - '0';
             }
         }
 
-        int result = 0;
+        int count = 0;
         for(int i = 0; i < n; i++){
             for(int j = 0; j < m; j++){
-                if(dfs(i, j)){
-                    result += 1;
+                if(dfs(i,j)){
+                    count++;
                 }
             }
         }
 
-        System.out.println(result);
+        System.out.println(count);
         reader.close();
     }
 
-    private static boolean dfs(int i, int j) {
-        if(i < 0 || i >= n || j < 0 || j >= m){ return false; }
+    private static boolean dfs(int i, int j){
+        if(i < 0 || i >= n || j < 0 || j >= m || map[i][j] != 0) { return false; }
 
-        if(graph[i][j] == 0){
+        map[i][j] = 1;
 
-            graph[i][j] = 1;
+        dfs(i,j+1);
+        dfs(i, j-1);
+        dfs(i+1,j);
+        dfs(i-1,j);
 
-            dfs(i-1, j);
-            dfs(i, j+1);
-            dfs(i+1, j);
-            dfs(i, j-1);
-            return true;
-        }
-        return false;
+        return true;
     }
+
 }

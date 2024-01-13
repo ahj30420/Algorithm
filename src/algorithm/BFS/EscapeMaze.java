@@ -5,76 +5,51 @@ import java.util.*;
 
 //미로 탈출
 public class EscapeMaze {
-
-    public static int n,m;
-    public static int[][] map = new int[201][201];
-
-    public static int[] dx = {-1, 1, 0, 0};
-    public static int[] dy = {0, 0, 1, -1};
-
     public static void main(String[] args) throws IOException {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
 
-        n = Integer.parseInt(tokenizer.nextToken());
-        m = Integer.parseInt(tokenizer.nextToken());
+        int n = Integer.parseInt(tokenizer.nextToken());
+        int m = Integer.parseInt(tokenizer.nextToken());
+
+        int[][] map = new int[n][m];
 
         for(int i = 0; i < n; i++){
-            tokenizer = new StringTokenizer(reader.readLine());
-            String target = tokenizer.nextToken();
+            String target = reader.readLine();
             for(int j = 0; j < m; j++){
                 map[i][j] = target.charAt(j) - '0';
             }
         }
 
-        System.out.println(bfs(0,0));
-        reader.close();
-    }
+        int[] dx = {0,1,0,-1};
+        int[] dy = {1,0,-1,0};
 
-    private static int bfs(int x, int y) {
-
-        Queue<Node> queue = new LinkedList<>();
-        queue.offer(new Node(x,y));
+        int[] start = {0,0};
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(start);
 
         while(!queue.isEmpty()){
-            Node node = queue.poll();
-            x = node.getX();
-            y = node.getY();
+            int[] loc = queue.poll();
+            int y = loc[0];
+            int x = loc[1];
 
             for(int i = 0; i < 4; i++){
-                int nx = x + dx[i];
-                int ny = y + dy[i];
+                int cx = x + dx[i];
+                int cy = y + dy[i];
 
-                if(nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
+                if(cx < 0 || cx >= m || cy < 0 || cy >= n || map[cy][cx] == 0) {continue;}
 
-                if(map[nx][ny] == 0) continue;
-
-                if(map[nx][ny] == 1){
-                    map[nx][ny] = map[x][y] + 1;
-                    queue.offer(new Node(nx, ny));
+                if(map[cy][cx] == 1) {
+                    map[cy][cx] = map[y][x] + 1;
+                    int[] nextLoc = {cy,cx};
+                    queue.add(nextLoc);
                 }
             }
         }
-        return map[n-1][m-1];
+        
+        System.out.println(map[n-1][m-1]);
+        reader.close();
     }
 }
 
-
-class Node{
-    int x;
-    int y;
-
-    public Node(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-}

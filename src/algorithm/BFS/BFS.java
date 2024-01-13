@@ -19,23 +19,23 @@ public class BFS {
                 {1,7}
         };
 
-        boolean[] visitied = new boolean[9];
+        boolean[] visited = new boolean[9];
 
+        visited[n] = true;
         Queue<Integer> queue = new LinkedList<>();
-        queue.offer(n);
-        visitied[n] = true;
+        queue.add(n);
 
         while(!queue.isEmpty()){
             int x = queue.poll();
             System.out.println(x + " ");
+
             for(int i = 0; i < graph[x].length; i++){
-                int y = graph[x][i];
-                if(!visitied[y]) {
-                    queue.offer(y);
-                    visitied[y] = true;
+                int k = graph[x][i];
+                if(!visited[k]){
+                    queue.add(k);
+                    visited[k] = true;
                 }
             }
-
         }
 
     }
