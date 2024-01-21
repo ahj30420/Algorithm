@@ -3,8 +3,8 @@ package algorithm.dynamic;
 import java.util.*;
 import java.io.*;
 
-//개미 전사
-public class AntWorrior {
+//병사 배치하기
+public class DeploymentSoldiers {
     public static void main(String[] args) throws IOException{
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -13,20 +13,26 @@ public class AntWorrior {
 
         int[] arr = new int[n];
         StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
-        for(int i = 0; i < n; i++){
+        for(int i = n-1; i >= 0 ; i--){
             arr[i] = Integer.parseInt(tokenizer.nextToken());
         }
 
-        int[] dp = new int[100];
-        dp[0] = arr[0];
-        dp[1] = Math.max(arr[0], arr[1]);
-
-        for(int i = 2; i < n; i++){
-            dp[i] = Math.max(dp[i-1], dp[i-2]+arr[i]);
+        int[] dp = new int[n];
+        for(int i = 0; i < n; i++){
+            dp[i] = 1;
+            for(int j = 0; j <= i; j++){
+                if(arr[j] < arr[i]){
+                    dp[i] = Math.max(dp[i], dp[j]+1);
+                }
+            }
         }
 
-        System.out.println(dp[n-1]);
+        int max = 0;
+        for(int i = 0; i < n; i++){
+            if(max < dp[i]){ max = dp[i]; }
+        }
 
+        System.out.println(n-max);
         reader.close();
     }
 }

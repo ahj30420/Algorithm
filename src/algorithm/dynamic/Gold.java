@@ -11,13 +11,13 @@ public class Gold {
 
         int t = Integer.parseInt(reader.readLine());
 
-        for(int i = 0; i < t; i++) {
+        for(int i = 0; i < t; i++){
+
             StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
             int n = Integer.parseInt(tokenizer.nextToken());
             int m = Integer.parseInt(tokenizer.nextToken());
 
             int[][] arr = new int[n][m];
-            int[][] dp = new int[n][m];
             tokenizer = new StringTokenizer(reader.readLine());
             for(int j = 0; j < n; j++){
                 for(int z = 0; z < m; z++){
@@ -25,34 +25,33 @@ public class Gold {
                 }
             }
 
-            for(int j = 0; j < n; j++){
-                for(int z = 0; z < m; z++){
-                    dp[j][z] = arr[j][z];
+            int[][] dp = new int[n][m];
+            for(int j = 0; j < m; j++){
+                for(int z = 0; z < n; z++){
+                    if(j == 0){
+                        dp[z][j] = arr[z][j];
+                    } else{
+                        if(z == 0){
+                            dp[z][j] = Math.max(dp[z][j-1], dp[z+1][j-1]) + arr[z][j];
+                        } else if(z == n-1){
+                            dp[z][j] = Math.max(dp[z][j-1], dp[z-1][j-1]) + arr[z][j];
+                        } else{
+                            dp[z][j] = Math.max(dp[z][j-1], Math.max(dp[z-1][j-1], dp[z+1][j-1])) + arr[z][j];
+                        }
+                    }
                 }
             }
 
-            for(int z = 1; z < m; z++){
-                for(int j = 0; j < n; j++){
-                    int leftUp, left, leftDown;
-
-                    if(j == 0) leftUp = 0;
-                    else leftUp = dp[j-1][z-1];
-
-                    if(j == n-1) leftDown = 0;
-                    else leftDown = dp[j+1][z-1];
-
-                    left = dp[j][z-1];
-
-                    dp[j][z] = dp[j][z] + Math.max(leftUp,Math.max(leftDown,left));
+            int max = 0;
+            for(int j = 0; j < n; j++){
+                if(max < dp[j][m-1]){
+                    max = dp[j][m-1];
                 }
             }
 
-            int result = 0;
-            for(int j = 0; j < n; j++){
-                result = Math.max(result, dp[j][m-1]);
-            }
-            System.out.println(result);
+            System.out.println(max);
         }
+
 
         reader.close();
     }

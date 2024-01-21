@@ -1,33 +1,32 @@
 package algorithm.dynamic;
 
 import java.io.*;
+import java.util.Scanner;
 
 //1로 만들기
 public class MakeOne {
+    public static void main(String[] args){
 
-    public static int[] d = new int[3001];
+        Scanner scan = new Scanner(System.in);
 
-    public static void main(String[] args) throws IOException{
+        int n = scan.nextInt();
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int x = Integer.parseInt(reader.readLine());
+        int[] dp = new int[30001];
+        dp[1] = 0;
 
-        d[1] = 0;
-
-        for(int i = 2; i <= x; i++){
-            d[i] = d[i-1] + 1;
-            if(i % 2 == 0) {
-                d[i] = Math.min(d[i], d[i/2] + 1);
+        for(int i = 2; i <= n; i++){
+            dp[i] = dp[i-1] + 1;
+            if(i % 2 == 0){
+                dp[i] = Math.min(dp[i], dp[i/2] + 1);
             }
             if(i % 3 == 0){
-                d[i] = Math.min(d[i], d[i/3] + 1);
+                dp[i] = Math.min(dp[i], dp[i/3] + 1);
             }
             if(i % 5 == 0){
-                d[i] = Math.min(d[i], d[i/5] + 1);
+                dp[i] = Math.min(dp[i], dp[i/5] + 1);
             }
         }
 
-        System.out.println(d[x]);
-        reader.close();
+        System.out.println(dp[n]);
     }
 }

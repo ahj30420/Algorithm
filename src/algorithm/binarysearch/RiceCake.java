@@ -14,26 +14,27 @@ public class RiceCake {
         int m = Integer.parseInt(tokenizer.nextToken());
 
         int[] arr = new int[n];
+
         tokenizer = new StringTokenizer(reader.readLine());
+        int max = -1;
         for(int i = 0; i < n; i++){
             arr[i] = Integer.parseInt(tokenizer.nextToken());
+            if(max < arr[i]){
+                max = arr[i];
+            }
         }
 
-        Arrays.sort(arr);
-        int max = arr[n-1];
-
-
-        int result = getBinarySearch(arr, m, 0, max-1, 0);
+        int result = getBinarySearch(arr, m, 0, max, 0, max-1);
 
         System.out.println(result);
         reader.close();
     }
 
-    private static int getBinarySearch(int[] arr, int target, int start, int end, int beforestep) {
-        int result = 0;
-        if(start > end) { return beforestep; }
-        int mid = (start + end) / 2;
+    private static int getBinarySearch(int[] arr, int target, int beforeMid, int beforeResult, int start, int end) {
+        if(start > end) { return -1; }
+        int mid = (start+end) / 2;
 
+        int result = 0;
         for(int i = 0; i < arr.length; i++){
             int rest = 0;
             if(arr[i] >= mid) { rest = arr[i] - mid; }
@@ -41,10 +42,10 @@ public class RiceCake {
         }
 
         if(result == target) { return mid; }
-
-        else if(result > target) { return getBinarySearch(arr, target, mid, end, result); }
-
-        else { return getBinarySearch(arr, target, 0, mid, result); }
-
+        else if(result < target){ return getBinarySearch(arr, target, mid, result, start, mid-1); }
+        else{
+            if(beforeResult < target) { return beforeMid; }
+            return getBinarySearch(arr, target, mid, result, mid+1, end);
+        }
     }
 }
