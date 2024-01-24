@@ -1,11 +1,9 @@
 package algorithm.ShortestPath;
 
 import java.util.*;
-import java.io.*;
 
 //다익스트라 알고리즘 구현
 public class Dijkstra {
-
     public static final int INF = (int) 1e9;
     public static int n,m,start;
     public static ArrayList<ArrayList<Node>> graph = new ArrayList<ArrayList<Node>>();
