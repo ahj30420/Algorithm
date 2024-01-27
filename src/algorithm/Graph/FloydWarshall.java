@@ -1,6 +1,5 @@
-package algorithm.ShortestPath;
+package algorithm.Graph;
 
-import java.io.*;
 import java.util.*;
 
 //플로이드-워셜
