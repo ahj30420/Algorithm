@@ -3,62 +3,85 @@ package data_structure.stack;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Stack {
-    public static void main(String args[]) throws IOException {
+   public static void main(String[] args) throws IOException {
+       BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+       StringBuilder builder = new StringBuilder();
+       Integer totalCnt = Integer.parseInt(reader.readLine());
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        java.util.Stack<Integer> stack = new java.util.Stack<>();
+       MyStack myStack = new MyStack();
 
-        int count = Integer.parseInt(reader.readLine());
+       for(int i = 0; i < totalCnt; i++){
+           executeStack(myStack, reader.readLine(), builder);
+       }
 
-        for(int i = 0; i < count; i++){
-            executeStack(stack,reader.readLine());
-        }
-        reader.close();
-    }
+       System.out.println(builder.toString());
+       reader.close();
+   }
 
-    private static void executeStack(java.util.Stack stack, String line) {
-        if(line.contains(" ")){
-            int index = line.lastIndexOf(" ");
-            stack.push(Integer.parseInt(line.substring(index+1)));
-        }
+   private static void executeStack(MyStack myStack, String input, StringBuilder builder){
+       StringTokenizer tokenizer = new StringTokenizer(input);
+       String calculate = tokenizer.nextToken();
 
-        else{
-            switch(line){
-                case "top":
-                    if(stack.isEmpty()){
-                        System.out.println(-1);
-                    }
-                    else{
-                        System.out.println(stack.peek());
-                    }
-                    break;
+       switch(calculate){
+           case "push":
+               int value = Integer.parseInt(tokenizer.nextToken());
+               myStack.push(value);
+               break;
 
-                case "size":
-                    System.out.println(stack.size());
-                    break;
+           case "pop":
+               builder.append(myStack.pop()).append("\n");
+               break;
 
-                case "empty":
-                    if(stack.isEmpty()){
-                        System.out.println(1);
-                    }
-                    else{
-                        System.out.println(0);
-                    }
-                    break;
+           case "size":
+               builder.append(myStack.size()).append("\n");
+               break;
 
-                case "pop":
-                    if(stack.isEmpty()){
-                        System.out.println(-1);
-                    }
-                    else{
-                        System.out.println(stack.pop());
-                    }
-                    break;
+           case "empty":
+               builder.append(myStack.empty()).append("\n");
+               break;
 
-            }
-        }
+           case "top":
+               builder.append(myStack.top()).append("\n");
+               break;
+       }
+   }
 
-    }
+   private static class MyStack {
+       private final static java.util.Stack<Integer> stack = new java.util.Stack<>();
+
+       public void push(int value){
+           stack.push(value);
+       }
+
+       public int pop(){
+           if(stack.isEmpty()){
+               return -1;
+           } else{
+               return stack.pop();
+           }
+       }
+
+       public int size(){
+           return stack.size();
+       }
+
+       public int empty(){
+           if(stack.isEmpty()){
+               return 1;
+           } else{
+               return 0;
+           }
+       }
+
+       public int top(){
+           if(stack.isEmpty()){
+               return -1;
+           } else{
+               return stack.peek();
+           }
+       }
+   }
 }
