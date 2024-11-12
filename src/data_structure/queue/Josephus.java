@@ -3,44 +3,38 @@ package data_structure.queue;
 import java.util.*;
 import java.io.*;
 
-//요세푸스 문제
 public class Josephus {
     public static void main(String[] args) throws IOException{
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-
+        StringBuilder output = new StringBuilder();
         StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
-        int n = Integer.parseInt(tokenizer.nextToken());
-        int k = Integer.parseInt(tokenizer.nextToken());
-        java.util.Queue<Integer> queue = new LinkedList<>();
 
-        for(int i = 1; i <= n; i++){
-            queue.add(i);
+        Queue<Integer> queue = new LinkedList<>();
+        int N = Integer.parseInt(tokenizer.nextToken());
+        int K = Integer.parseInt(tokenizer.nextToken());
+
+        for(int i = 1; i <= N; i++){
+            queue.offer(i);
         }
 
-        int num = 1;
+        output.append("<");
+        int count = 0;
+        while(!queue.isEmpty()){
+            count++;
+            int value = queue.poll();
 
-        sb.append("<");
-        while(true){
-            if(queue.size() == 1){
-                sb.append(queue.poll()+">");
-                break;
-            }
-
-            if(num != k){
-                int target = queue.poll();
-                queue.add(target);
-                num++;
-            }
-            else{
-                num = 1;
-                sb.append(queue.poll()+", ");
+            if(count == K){
+                if(queue.isEmpty()){
+                    output.append(value).append(">");
+                } else{
+                    output.append(value).append(", ");
+                }
+                count = 0;
+            } else{
+                queue.offer(value);
             }
         }
 
-        System.out.println(sb.toString());
-        reader.close();
-
+        System.out.println(output.toString());
     }
 }
