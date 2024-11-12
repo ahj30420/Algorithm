@@ -5,43 +5,38 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class Parenthesis_String {
+public class Parenthesis {
     public static void main(String[] args) throws IOException {
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int totalCnt = Integer.parseInt(reader.readLine());
 
-        int T = Integer.parseInt(reader.readLine());
-
-        for(int i = 0; i < T; i++){
-           if(isVPS(reader.readLine())){
+        for(int i = 0; i < totalCnt; i++){
+            if(isVPS(reader.readLine())){
                 System.out.println("YES");
-            }
-            else{
+            } else{
                 System.out.println("NO");
             }
         }
+
         reader.close();
     }
 
-    private static boolean isVPS(String line) {
+    private static boolean isVPS(String input) {
         Stack<Character> stack = new Stack<>();
-        char[] ps = line.toCharArray();
+        char[] parenthesisList = input.toCharArray();
 
-        for(int i = 0; i < ps.length; i++){
-            if(ps[i] == ')'){
+        for(int i = 0; i < parenthesisList.length; i++){
+            if(parenthesisList[i] == '('){
+                stack.push(parenthesisList[i]);
+            } else{
                 if(stack.isEmpty()){
                     return false;
-                }
-                else{
+                } else{
                     stack.pop();
                 }
-            }
-            else{
-                stack.push(ps[i]);
             }
         }
 
         return stack.isEmpty();
     }
-
 }
