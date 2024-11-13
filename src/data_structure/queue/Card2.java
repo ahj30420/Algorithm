@@ -1,22 +1,24 @@
 package data_structure.queue;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Card2 {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(reader.readLine());
 
-        Scanner scan = new Scanner(System.in);
-        java.util.Queue<Integer> queue = new LinkedList<>();
+        Queue<Integer> queue = new LinkedList<>();
 
-        int n = scan.nextInt();
-
-        for(int i = 1; i <= n; i++){
-            queue.add(i);
+        for (int i = 1; i <= N; i++) {
+            queue.offer(i);
         }
 
         while(queue.size() > 1){
             queue.poll();
-            queue.add(queue.poll());
+            queue.offer(queue.poll());
         }
 
         System.out.println(queue.poll());
