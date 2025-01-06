@@ -3,71 +3,71 @@ package algorithm.implemention;
 import java.io.*;
 import java.util.*;
 
-//로봇 청소기
+// 로봇 청소기
 public class RobotCleaner {
-    public static void main(String[] args) throws IOException {
 
+    private static int[] dx = {-1, 0, 1, 0};
+    private static int[] dy = {0, 1, 0, -1};
+
+    public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
 
-        int n = Integer.parseInt(tokenizer.nextToken());
-        int m = Integer.parseInt(tokenizer.nextToken());
+        int N = Integer.parseInt(tokenizer.nextToken());
+        int M = Integer.parseInt(tokenizer.nextToken());
 
         tokenizer = new StringTokenizer(reader.readLine());
-        int ndy = Integer.parseInt(tokenizer.nextToken());
-        int ndx = Integer.parseInt(tokenizer.nextToken());
-        int nd = Integer.parseInt(tokenizer.nextToken());
 
-        int[][] map = new int[n][m];
-        for (int i = 0; i < n; i++) {
+        int cx = Integer.parseInt(tokenizer.nextToken());
+        int cy = Integer.parseInt(tokenizer.nextToken());
+        int cd = Integer.parseInt(tokenizer.nextToken());
+
+        int[][] map = new int[N][M];
+        for(int i = 0; i < N; i++) {
             tokenizer = new StringTokenizer(reader.readLine());
-            for (int j = 0; j < m; j++) {
+            for(int j = 0; j < M; j++) {
                 map[i][j] = Integer.parseInt(tokenizer.nextToken());
             }
         }
 
-        int[] dx = {0, 1, 0, -1};
-        int[] dy = {-1, 0, 1, 0};
-        int count = 0;
-
-        while (true) {
-            // 현재 위치 청소
-            if (map[ndy][ndx] == 0) {
-                map[ndy][ndx] = 2;
-                count++;
+        int result = 0;
+        boolean canWork = true;
+        while(canWork) {
+            if(map[cx][cy] == 0) {
+                map[cx][cy] = 2;
+                result++;
             }
 
-            boolean move = false;
+            boolean fowardPossible = false;
+            for(int i = 0; i < 4; i++){
+                int nd = (cd + 3) % 4;
+                int nx = cx + dx[nd];
+                int ny = cy + dy[nd];
 
-            for (int i = 0; i < 4; i++) {
-                int cd = (nd + 3) % 4;
-                int cdy = ndy + dy[cd];
-                int cdx = ndx + dx[cd];
-
-                if (cdx >= 0 && cdx < m && cdy >= 0 && cdy < n && map[cdy][cdx] == 0) {
-                    nd = cd;
-                    ndy = cdy;
-                    ndx = cdx;
-                    move = true;
+                if(nx >= 0 && nx < N && ny >= 0 && ny < M && map[nx][ny] == 0){
+                    cx = nx;
+                    cy = ny;
+                    cd = nd;
+                    fowardPossible = true;
                     break;
                 }
-                nd = cd;
+                cd = nd;
             }
 
-            if (!move) {
-                int cdy = ndy + dy[(nd + 2) % 4];
-                int cdx = ndx + dx[(nd + 2) % 4];
+            if(!fowardPossible){
+                int nx = cx + dx[(cd + 2) % 4];
+                int ny = cy + dy[(cd + 2) % 4];
 
-                if (cdx >= 0 && cdx < m && cdy >= 0 && cdy < n && map[cdy][cdx] != 1) {
-                    ndy = cdy;
-                    ndx = cdx;
+                if(nx >= 0 && nx < N && ny >= 0 && ny < M && map[nx][ny] != 1){
+                    cx = nx;
+                    cy = ny;
                 } else {
-                    break;
+                    canWork = false;
                 }
             }
         }
 
-        System.out.println(count);
+        System.out.println(result);
         reader.close();
     }
 }
