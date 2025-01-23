@@ -5,62 +5,48 @@ import java.io.*;
 
 //공유기 설치
 public class InstallRouter {
-
-    private static int[] arr;
-    private static int n,c;
-
-    public static void main(String[] args) throws IOException{
-
+    public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(reader.readLine());
+        StringTokenizer tokenizer = new StringTokenizer(reader.readLine());
 
-        n = Integer.parseInt(st.nextToken());
-        c = Integer.parseInt(st.nextToken());
-        arr = new int[n];
+        int N = Integer.parseInt(tokenizer.nextToken());
+        int C = Integer.parseInt(tokenizer.nextToken());
 
-        for(int i = 0; i < n; i++){
-            arr[i] = Integer.parseInt(reader.readLine());
+        int[] houses = new int[N];
+        for(int i = 0; i < N; i++) {
+            houses[i] = Integer.parseInt(reader.readLine());
         }
 
-        Arrays.sort(arr);
+        Arrays.sort(houses);
 
-        int maxDist = (int) Math.ceil(arr[0]+arr[n-1]);
+        int left = 1;
+        int right = houses[N-1] - houses[0];
+        int result = 0;
 
-        int result = binarySearch(1, maxDist);
+        while(left <= right) {
+            int mid = (left + right) / 2;
+            if(canInstall(mid, houses, C)) {
+                result = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
 
         System.out.println(result);
         reader.close();
     }
 
-    private static int binarySearch(int start, int end){
-        int result = 0;
+    private static boolean canInstall(int minGap, int[] houses, int c) {
+        int count = 1;
+        int lastInstalled = houses[0];
 
-        while(start <= end){
-            int mid = (start+end) / 2;
-
-            if(check(mid)){
-                result = mid;
-                start = mid+1;
-            } else{
-                end = mid - 1;
+        for(int i = 1; i < houses.length; i++) {
+            if(houses[i] - lastInstalled >= minGap) {
+                count++;
+                lastInstalled = houses[i];
             }
         }
-
-        return result;
+        return count >= c;
     }
-
-    private static boolean check(int dist){
-        int routerCount = 1;
-        int lastInstalled = arr[0];
-
-        for(int i = 1; i < n; i++){
-            if(arr[i] - lastInstalled >= dist){
-                routerCount++;
-                lastInstalled = arr[i];
-            }
-        }
-
-        return routerCount >= c;
-    }
-
 }
