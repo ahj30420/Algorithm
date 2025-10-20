@@ -18,7 +18,6 @@ public class Main {
             things[i][1] = Integer.parseInt(tokenizer.nextToken());
         }
 
-        int result = 0;
         int[][] dp = new int[N + 1][K + 1];
 
         for (int i = 1; i <= N; i++) {
@@ -28,11 +27,10 @@ public class Main {
                 } else {
                     dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - things[i][0]] + things[i][1]);
                 }
-                result = Math.max(result, dp[i][j]);
             }
         }
 
-        System.out.println(result);
+        System.out.println(dp[N][K]);
         reader.close();
     }
 }
