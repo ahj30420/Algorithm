@@ -16,7 +16,7 @@ class Solution {
         
         List<Integer> list = new ArrayList<>();
         
-        for(int n = i; n <= j; n++) {
+        for (int n = i; n <= j; n++) {
             list.add(array[n]);
         }
         
