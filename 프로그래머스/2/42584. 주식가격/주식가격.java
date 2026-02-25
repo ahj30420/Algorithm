@@ -11,12 +11,12 @@ class Solution {
                 int idx = stack.pop();
                 answer[idx] = i - idx;
             }
-            stack.push(i);
+            stack.add(i);
         }
         
         while (!stack.isEmpty()) {
             int idx = stack.pop();
-            answer[idx] = len - 1 - idx;
+            answer[idx] = len-1-idx;
         }
         
         return answer;
